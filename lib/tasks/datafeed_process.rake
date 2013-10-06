@@ -5,16 +5,17 @@ namespace :datafeed do
   task :load => :environment do
 
       # logging setup
-      @log = Logger.new("/Users/pierce/Documents/MSD/clients/Numeric/roomkey/roomkey_datafeed/sc_datafeed_log.log", 10, 1024000)
+      @log = Logger.new(Rails.root.join('log','sc_datafeed_log.log'), 10, 1024000)
       @log.level = Logger::INFO
 
       # path for data
-      @data_path ='/Users/pierce/Documents/MSD/clients/Numeric/roomkey/roomkey_datafeed/datafeed/rmkyprod_2013-08-20/'
-      @archive_path ='/Users/pierce/Documents/MSD/clients/Numeric/roomkey/roomkey_datafeed/datafeed/archive/'
+      # @data_file = 'hit_data.tsv'
+      @data_path = Rails.root.join('data')
+      @archive_path = Rails.root.join('data','archive')
 
       # localhost database connection
       @db = Mysql2::Client.new(:host => "127.0.0.1", :username => "root")
-=begin 
+begin 
       # copy all files into archive path
       begin
          Dir["#{@data_path}*.*"].each do |file|
@@ -27,7 +28,7 @@ namespace :datafeed do
              end
          end
       end
-=end
+end
 =begin
       # unzip any zip files
       begin
