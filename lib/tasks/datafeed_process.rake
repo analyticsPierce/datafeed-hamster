@@ -74,25 +74,27 @@ end
         end
       end        
 
-#begin
-#       Dir["#{@data_path}*.tsv"].each do |dir_file|
-#           begin 
-#              File.open(dir_file, "w+") do |file|
-#                file.lines.each do |line|
-#                 line.gsub(/\\t/, " ") 
-#                 line.gsub(/\\/, " ")                  
-#                 line.gsub(/\(\"/, "(") 
-#                 line.gsub(/\"\)/, ")")
-#                end 
-#              end   
-#           rescue Exception => e
-#              @log.warn("Unable to replace the bad characters because #{e.message}")
-#              next
-#           end
-#        end      
-#      rescue
-#        nil
-#      end
+      begin
+        Dir["#{@data_path}*.tsv"].each do |dir_file|
+          begin 
+            File.open(dir_file, "w+") do |file|
+              file.lines.each do |line|
+                # line.gsub(/\\t/, " ") 
+                line.gsub(/\\/, " ")                  
+                line.gsub(/"/, "")                  
+                line.gsub(/'/, "")                  
+                line.gsub(/\(\"/, "(") 
+                line.gsub(/\"\)/, ")")
+              end 
+            end   
+          rescue Exception => e
+            @log.warn("Unable to replace the bad characters because #{e.message}")
+            next
+          end
+        end      
+      rescue
+        nil
+      end
                 
       # process the tsv file
       begin
